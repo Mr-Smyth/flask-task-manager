@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Im part of the base template!</h1>
-    {% block content %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+      integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+      crossorigin="anonymous"
+    />
+    <!-- Materialize -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      type="text/css"
+    />
+    <!-- Our Static CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css">
+    <!-- Add facility to have local, in-html styling -->
+    {% block styles %}
     {% endblock %}
-</body>
+    <title>Task Manager</title>
+  </head>
+
+  <body>
+    
+    {% block content %} 
+    {% endblock %}
+
+    <!-- The JQuery Script -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <!-- The Materialize Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Our Static Js Script -->
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+    <!-- Add facility for  local in-html scripts -->
+    {% block scripts %}
+    {% endblock %}
+  </body>
 </html>
