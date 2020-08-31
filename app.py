@@ -2,7 +2,8 @@ import os
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
-# Import flask_pymongo - Note the underscore, rather than hyphen in the install.
+# Import flask_pymongo -
+# Note the underscore, rather than hyphen in the install.
 from flask_pymongo import PyMongo
 # So we can find bson objects from MongoDB
 from bson.objectid import ObjectId
@@ -28,6 +29,7 @@ app.secret_key = os.environ.get("MONGO_DBNAME")
 # Setup an instance of PyMongo, and add the app into that
 # Using a constructor method
 mongo = PyMongo(app)
+
 
 # Test function to check our setup
 # "/" refers to the default route

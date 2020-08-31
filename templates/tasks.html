@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!-- Using the task variable setup in app.py
-        We can now use that variable to iterate over the results
-        Using dot notation -->
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>Im in the Tasks page, and im extending base.html</h2>
+
     {% for task in tasks %}
         {{ task.task_name }}<br>
         {{ task.category_name }}<br>
@@ -16,5 +10,5 @@
         {{ task.is_urgent }}<br>
         {{ task.due_date }}<br>
     {% endfor %}
-</body>
-</html>
+
+{% endblock %}
