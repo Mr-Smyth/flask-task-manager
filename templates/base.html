@@ -17,17 +17,51 @@
       type="text/css"
     />
     <!-- Our Static CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css')}}"
+      type="text/css"
+    />
     <!-- Add facility to have local, in-html styling -->
-    {% block styles %}
-    {% endblock %}
+    {% block styles %} {% endblock %}
     <title>Task Manager</title>
   </head>
 
   <body>
-    
-    {% block content %} 
-    {% endblock %}
+    <header>
+      <!-- TOP NAVBAR  -->
+      <nav class="nav-extended text-shadow light-blue darken-1">
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo">Task Manager</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"
+            ><i class="fas fa-bars"></i
+          ></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">New Task</a></li>
+            <li><a href="#">Manage Categories</a></li>
+            <li><a href="#">Log Out</a></li>
+            <li><a href="#">Log In</a></li>
+            <li><a href="#">Register</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- SIDE NAVBAR -->
+      <ul class="sidenav" id="mobile-demo">
+      <li><h4 class="center-align light-blue-text text-darken-4">Task Manager</h4></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">New Task</a></li>
+        <li><a href="#">Manage Categories</a></li>
+        <li><a href="#">Log Out</a></li>
+        <li><a href="#">Log In</a></li>
+        <li><a href="#">Register</a></li>
+      </ul>
+    </header>
+
+    {% block content %} {% endblock %}
 
     <!-- The JQuery Script -->
     <script
@@ -40,7 +74,6 @@
     <!-- Our Static Js Script -->
     <script src="{{ url_for('static', filename='js/script.js')}}"></script>
     <!-- Add facility for  local in-html scripts -->
-    {% block scripts %}
-    {% endblock %}
+    {% block scripts %} {% endblock %}
   </body>
 </html>
