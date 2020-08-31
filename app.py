@@ -7,6 +7,7 @@ from flask import (
 from flask_pymongo import PyMongo
 # So we can find bson objects from MongoDB
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # We need to import env.py, but because env.py wont
@@ -42,6 +43,10 @@ def get_tasks():
     # first tasks is a new variable we pass to the html
     # equal to the above tasks.
 
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
 
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
