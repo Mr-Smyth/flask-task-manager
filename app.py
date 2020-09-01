@@ -76,6 +76,7 @@ def register():
         # PUT THE NEW USER INTO 'SESSION' COOKIE
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
+        return redirect(url_for("profile", username=session["user"]))
 
     return render_template("register.html")
 
@@ -92,8 +93,12 @@ def login():
             # HASHED PASSWORD MATCHES USER ENTERED PASSWORD.
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
+                    session["user"] = request.form.get(
+                        "username").lower()
+                    flash("Welcome, {}".format(
+                        request.form.get("username").capitalize()))
+                    return redirect(url_for(
+                        "profile", username=session["user"]))
             else:
                 # ELSE THE PASSWORD IS WRONG
                 flash("Incorrect Username and/or Password")
@@ -106,6 +111,16 @@ def login():
 
     return render_template("login.html")
 
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # SETUP THE USERNAME VARIABLE EQUAL TO THE USERNAME
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    # return the rendered template, but pass through the username variable
+    # the first username is the variable being passed,
+    # the second is the one above.
+    return render_template("profile.html", username=username.capitalize())
 
 
 # Tell our app, how and where to run our application
