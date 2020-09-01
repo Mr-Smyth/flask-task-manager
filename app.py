@@ -123,6 +123,13 @@ def profile(username):
     return render_template("profile.html", username=username.capitalize())
 
 
+@app.route("/logout")
+def logout():
+    # REMOVE USER FROM SESSION COOKIES
+    flash("You have been logged out")
+    session.pop("user")
+    return redirect(url_for('login'))
+
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
     # set the host to the default ip set in env.py
