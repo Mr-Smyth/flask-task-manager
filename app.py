@@ -77,9 +77,8 @@ def register():
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
 
-
-
     return render_template("register.html")
+
 
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
