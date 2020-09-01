@@ -43,6 +43,24 @@
           <label for="password">Password</label>
         </div>
       </div>
+      <!-- PASSWORD CHECK SECTION -->
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="fas fa-user-lock prefix light-blue-text text-darken-4"></i>
+          <input
+            id="password-check"
+            name="password-check"
+            type="password"
+            minlength="5"
+            maxlength="15"
+            pattern="^[a-zA-Z0-9\-_.]{5,15}$"
+            class="validate"
+            required
+          />
+          <span id='message'></span>
+          <label for="password-check">Confirm Password</label>
+        </div>
+      </div>
       <!-- REGISTER SECTION -->
       <div class="row">
         <button
