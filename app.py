@@ -38,7 +38,9 @@ mongo = PyMongo(app)
 @app.route("/get_tasks")
 def get_tasks():
     # Find all documents from the tasks collection
-    tasks = mongo.db.tasks.find()
+    # ADD = LIST() TO CONVERT RESULT TO A PROPPER LIST
+    # THIS ALLOWS JINGA TO UNPACK MULTIPLE TIMES
+    tasks = list(mongo.db.tasks.find())
     return render_template("tasks.html", tasks=tasks)
     # first tasks is a new variable we pass to the html
     # equal to the above tasks.
