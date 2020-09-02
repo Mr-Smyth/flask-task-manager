@@ -138,7 +138,11 @@ def logout():
 
 @ app.route("/add_task")
 def add_task():
-    return render_template("add_task.html")
+    # SETUP LINKS TO THE CATEGORIES FOR THE CATEGORY SELECTION
+    # SORT THEM BY NAME - ASCENDING ORDER
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    # RETURN THE ADD_TASK PAGE
+    return render_template("add_task.html", categories=categories)
 
 
 # Tell our app, how and where to run our application
