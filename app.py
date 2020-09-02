@@ -136,6 +136,11 @@ def logout():
     return redirect(url_for('login'))
 
 
+@ app.route("/add_task")
+def add_task():
+    return render_template("add_task.html")
+
+
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
     # set the host to the default ip set in env.py
