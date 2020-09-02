@@ -91,10 +91,9 @@ def login():
         if existing_user:
             # IF THE USERNAME MATCHES, THEN WE NEED TO MAKE SURE
             # HASHED PASSWORD MATCHES USER ENTERED PASSWORD.
-            if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get(
-                        "username").lower()
+            if check_password_hash(existing_user["password"], request.form.get(
+                "password")):
+                    session["user"] = request.form.get("username").lower()
                     flash("Welcome, {}".format(
                         request.form.get("username").capitalize()))
                     return redirect(url_for(
@@ -120,7 +119,11 @@ def profile(username):
     # return the rendered template, but pass through the username variable
     # the first username is the variable being passed,
     # the second is the one above.
-    return render_template("profile.html", username=username.capitalize())
+    # SO USERS CANT FORCE THE URL TO SOMEONE ELSES PROFILE, WE ADD AN IF
+    if session["user"]:
+        return render_template("profile.html", username=username.capitalize())
+
+    return redirect(url_for("login"))
 
 
 @app.route("/logout")
@@ -129,6 +132,7 @@ def logout():
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for('login'))
+
 
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
