@@ -136,8 +136,29 @@ def logout():
     return redirect(url_for('login'))
 
 
-@ app.route("/add_task")
+@ app.route("/add_task", methods=["GET", "POST"])
 def add_task():
+    # IF ANY ATTEMPT TO SUBMIT DATA
+    if request.method == "POST":
+        # LETS FIRST SETUP THE URGENT SELECTION FOR CHECKING
+        # USING A TERNARY IF
+        is_urgent = "on" if request.form.get("is_urgent") else "off"
+
+        # SETUP OUR DICTIONARY FOR IMPORTING TO MONGO DB
+        # note: .getlist can be used instead of .get, for list items
+        task = {
+            "category_name": request.form.get("category_name"),
+            "task_name": request.form.get("task_name"),
+            "task_description": request.form.get("task_description"),
+            "is_urgent": is_urgent,
+            "due_date": request.form.get("sue_date"),
+            "created_by": session["user"]
+        }
+        # ADD THE DICT TO MONGO
+        mongo.db.tasks.insert_one(task)
+        flash("Task Successfully Added")
+        return redirect(url_for("get_tasks"))
+
     # SETUP LINKS TO THE CATEGORIES FOR THE CATEGORY SELECTION
     # SORT THEM BY NAME - ASCENDING ORDER
     categories = mongo.db.categories.find().sort("category_name", 1)
