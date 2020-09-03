@@ -151,7 +151,7 @@ def add_task():
             "task_name": request.form.get("task_name"),
             "task_description": request.form.get("task_description"),
             "is_urgent": is_urgent,
-            "due_date": request.form.get("sue_date"),
+            "due_date": request.form.get("due_date"),
             "created_by": session["user"]
         }
         # ADD THE DICT TO MONGO
@@ -170,7 +170,27 @@ def add_task():
 def edit_task(task_id):
     # THIS IS FOR THE EDIT BUTTON
     # AS WE HAVE IMPORTED OBJECTID WHICH ALLOWS US TO
-    # RENDER MONGO DOCUMENTS BY THERE UNIQUE ID.
+    # RENDER MONGO DOCUMENTS BY THEIR UNIQUE ID.
+
+    if request.method == "POST":
+        # LETS FIRST SETUP THE URGENT SELECTION FOR CHECKING
+        # USING A TERNARY IF
+        is_urgent = "on" if request.form.get("is_urgent") else "off"
+
+        # SETUP OUR DICTIONARY FOR IMPORTING TO MONGO DB
+        # note: .getlist can be used instead of .get, for list items
+        submit = {
+            "category_name": request.form.get("category_name"),
+            "task_name": request.form.get("task_name"),
+            "task_description": request.form.get("task_description"),
+            "is_urgent": is_urgent,
+            "due_date": request.form.get("due_date"),
+            "created_by": session["user"]
+        }
+        # ADD THE DICT TO MONGO
+        # USING UPDATE TO FIND THE ID , THEN INSERT THE SUBMIT DICT
+        mongo.db.tasks.update({"_id": ObjectId(task_id)}, submit)
+        flash("Task Successfully Updated")
 
     # TARGET THE TASK BY ITS THE ID OF THE TASK ITS CLICKED ON
     # WHICH IS THE task_id BEING PASSED IN. ObjectId WILL FIND THE ID
@@ -180,7 +200,7 @@ def edit_task(task_id):
     # SETUP LINKS TO THE CATEGORIES FOR THE CATEGORY SELECTION
     # SORT THEM BY NAME - ASCENDING ORDER
     categories = mongo.db.categories.find().sort("category_name", 1)
-    
+
     # RETURN THE edit_task PAGE, BUT OUR EDIT PAGE
     # NEEDS TO KNOW WHICH TASK IS BEING MODIFIED, SO PASS task=task
     return render_template("edit_task.html", task=task, categories=categories)
