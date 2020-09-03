@@ -166,6 +166,28 @@ def add_task():
     return render_template("add_task.html", categories=categories)
 
 
+@app.route("/edit_task/<task_id>", methods=["GET", "POST"])
+def edit_task(task_id):
+    # THIS IS FOR THE EDIT BUTTON
+    # AS WE HAVE IMPORTED OBJECTID WHICH ALLOWS US TO
+    # RENDER MONGO DOCUMENTS BY THERE UNIQUE ID.
+
+    # TARGET THE TASK BY ITS THE ID OF THE TASK ITS CLICKED ON
+    # WHICH IS THE task_id BEING PASSED IN. ObjectId WILL FIND THE ID
+    # OF THE task_id. 
+    task = mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
+
+    # SETUP LINKS TO THE CATEGORIES FOR THE CATEGORY SELECTION
+    # SORT THEM BY NAME - ASCENDING ORDER
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    
+    # RETURN THE edit_task PAGE, BUT OUR EDIT PAGE
+    # NEEDS TO KNOW WHICH TASK IS BEING MODIFIED, SO PASS task=task
+    return render_template("edit_task.html", task=task, categories=categories)
+
+
+
+
 # Tell our app, how and where to run our application
 if __name__ == "__main__":
     # set the host to the default ip set in env.py

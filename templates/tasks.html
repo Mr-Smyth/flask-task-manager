@@ -10,8 +10,13 @@
 			<div class="collapsible-header white-text light-blue darken-4 text-shadow">
                 <div class="col s3">
 				    <i class="fas fa-caret-down"></i>
-                    <a class="btn-small green accent-4">Done</a>
-                    <a class="btn-small light-blue accent-4">Edit </a>
+                    <a href="" class="btn-small green accent-4">Done</a>
+                    <!-- LIKE THE EDIT_TASK PAGE, WHEN WE CALL THE EDIT_TASK FUNCTION, THE FUNCTION ALSO
+                        EXPECTS THE TASKS ID TO BE PASSED THROUGH. WE HAVE ONLY CREATED THE task VARIABLE 
+                        FOR OUR EDIT TEMPLATE. 
+                        FORTUNATLY, WE HAVE ON THIS PAGE A READY MADE FIX - A VARIABLE CALLED task
+                        FROM THE jinga FOR LOOP ABOVE. SO WE USE THAT, AND USE .NOTATION TO PROVIDE THE ID -->
+                    <a href="{{ url_for('edit_task', task_id=task._id) }}" class="btn-small light-blue accent-4">Edit </a>
                 </div>
                 <div class="col s9">
                     <strong>{{ task.task_name }}</strong> : {{ task.due_date }}
