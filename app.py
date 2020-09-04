@@ -214,6 +214,12 @@ def delete_task(task_id):
     return redirect(url_for("get_tasks"))
 
 
+@app.route("/get_categories")
+def get_categories():
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
+    return render_template("categories.html", categories=categories)
+
+
 if __name__ == "__main__":
     # Tell our app, how and where to run our application
     # set the host to the default ip set in env.py
