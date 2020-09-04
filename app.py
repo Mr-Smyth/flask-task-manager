@@ -46,6 +46,16 @@ def get_tasks():
     # equal to the above tasks.
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    # BE SURE TO VIEW README FOR SETUP OF
+    # SEARCH INDEX - OR DO IN MONGODB DIRECTLY
+
+    query = request.form.get("query")
+    tasks = list(mongo.db.tasks.find({"$text": {"$search": query}}))
+    return render_template("tasks.html", tasks=tasks)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
