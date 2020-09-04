@@ -220,6 +220,25 @@ def get_categories():
     return render_template("categories.html", categories=categories)
 
 
+@ app.route("/add_category", methods=["GET", "POST"])
+def add_category():
+    # IF THE FUNCTION IS CALLED WITH THE POST METHOD
+    if request.method == "POST":
+
+        # SETUP OUR DICTIONARY FOR IMPORTING TO MONGO DB
+        category = {
+            "category_name": request.form.get("category_name"),
+        }
+        # ADD THE DICT TO MONGO
+        mongo.db.categories.insert_one(category)
+        flash("New Category Successfully Added")
+        return redirect(url_for("get_categories"))
+
+
+    return render_template("add_category.html")
+
+
+
 if __name__ == "__main__":
     # Tell our app, how and where to run our application
     # set the host to the default ip set in env.py
