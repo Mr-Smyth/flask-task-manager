@@ -238,6 +238,24 @@ def add_category():
     return render_template("add_category.html")
 
 
+@app.route("/edit_category/<category_id>", methods=["GET", "POST"])
+def edit_category(category_id):
+    # if function is invoked with a post
+    if request.method == "POST":
+        submit = {
+            "category_name": request.form.get("category_name")
+        }
+        mongo.db.categories.update({"_id": ObjectId(category_id)}, submit)
+        flash("Category Successfully Updated")
+        return redirect(url_for("get_categories"))
+
+    # SETUP LINK TO THE CATEGORy FOR THE SELECTED CATEGORY
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+
+    # RETURN THE edit_category PAGE, BUT OUR EDIT PAGE
+    # NEEDS TO KNOW WHICH CATEGORY IS BEING MODIFIED, SO PASS category variable
+    return render_template("edit_category.html", category=category)
+
 
 if __name__ == "__main__":
     # Tell our app, how and where to run our application
